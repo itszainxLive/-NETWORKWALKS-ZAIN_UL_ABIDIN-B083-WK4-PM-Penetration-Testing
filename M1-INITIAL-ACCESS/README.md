@@ -24,7 +24,7 @@ curl -IL "$TARGET"
 
 The target redirected (`301 Moved Permanently`) from the root domain to `/patient`, eventually resolving to `https://medirozahospital.com/patient/` with a final `200 OK` response. The server was identified as **LiteSpeed**.
 
-![Reconnaissance](screenshots/01-reconnaissance.png)
+![Reconnaissance](01-reconnaissance.png)
 
 ---
 
@@ -47,7 +47,7 @@ This revealed several internal paths, including:
 
 The presence of a directly reachable `login.php` was noted as the primary entry point to analyse next.
 
-![Exposed Entry Points](screenshots/02-exposed-entry-points.png)
+![Exposed Entry Points](02-exposed-entry-points.png)
 
 ---
 
