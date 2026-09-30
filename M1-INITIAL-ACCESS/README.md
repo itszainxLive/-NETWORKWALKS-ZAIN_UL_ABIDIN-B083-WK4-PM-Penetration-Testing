@@ -67,7 +67,7 @@ Username not found
 
 This confirmed the application was giving distinct, informative error messages based on input — a strong signal that user input was being handled unsafely on the backend.
 
-![Authentication Analysis](screenshots/03-authentication-analysis.png)
+![Authentication Analysis](03-authentication-analysis.png)
 
 ---
 
@@ -93,7 +93,7 @@ manual that corresponds to your MySQL server version for the right syntax
 to use near '''' at line 1
 ```
 
-![SQL Error - Test](screenshots/04-input-handling-sql-error.png)
+![SQL Error - Test](04-input-handling-sql-error.png)
 
 Built on this by injecting a classic authentication-bypass payload into **both** the username and password fields:
 
@@ -109,7 +109,7 @@ grep -Ei 'alert|error|warning|portal|login|username|password' auth-test.html
 
 The response returned the **Patient Portal** page content (the SQL syntax error persisted but the request was processed as an authenticated portal request), confirming the injection point could be leveraged to bypass authentication logic.
 
-![SQL Injection Testing](screenshots/04-input-handling-sql-error.png)
+![SQL Injection Testing](04-input-handling-sql-error2.png)
 
 ---
 
@@ -117,7 +117,7 @@ The response returned the **Patient Portal** page content (the SQL syntax error 
 
 Reproducing the same injection through the browser UI confirmed the vulnerability visually: submitting a single quote in the login form surfaced the raw MySQL error directly on the Patient Portal login page.
 
-![Proof of Access - SQL Error on Login Page](screenshots/05-proof-of-access-login.png)
+![Proof of Access - SQL Error on Login Page](05-proof-of-access-login.png)
 
 Following through with the crafted payload granted access to the authenticated **"My lab reports"** area of the Patient Portal, exposing 3 confidential, password-protected patient pathology reports:
 
