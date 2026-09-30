@@ -117,7 +117,7 @@ The response returned the **Patient Portal** page content (the SQL syntax error 
 
 Reproducing the same injection through the browser UI confirmed the vulnerability visually: submitting a single quote in the login form surfaced the raw MySQL error directly on the Patient Portal login page.
 
-![Proof of Access - SQL Error on Login Page](05-proof-of-access-login.png)
+![Proof of Access - SQL Error on Login Page](04-input-handling-sql-error2.png)
 
 Following through with the crafted payload granted access to the authenticated **"My lab reports"** area of the Patient Portal, exposing 3 confidential, password-protected patient pathology reports:
 
@@ -125,7 +125,7 @@ Following through with the crafted payload granted access to the authenticated *
 - Pathology Report — P. Reddy (Lab Ref LR-2024-1192)
 - Pathology Report — E. Thompson (Lab Ref LR-2024-1205)
 
-![Patient Lab Reports - Unauthorised Access](screenshots/06-lab-reports-access.png)
+![Patient Lab Reports - Unauthorised Access](05-proof-of-access-3-reports.png)
 
 ---
 
