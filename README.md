@@ -63,12 +63,12 @@ A black-box penetration test was carried out against the Mediroza General Hospit
 
 Reconnaissance identified the Patient Portal's structure and exposed internal paths, including `login.php`.
 
-![Reconnaissance](module1-initial-access/01-reconnaissance.png)
-![Exposed Entry Points](module1-initial-access/02-exposed-entry-points.png)
+![Reconnaissance](M1-INITIAL-ACCESS/01-reconnaissance.png)
+![Exposed Entry Points](M1-INITIAL-ACCESS/02-exposed-entry-points.png)
 
 Submitting a single quote (`'`) in the `username` field returned a distinct, informative error message, indicating unsafe handling of user input server-side.
 
-![Authentication Analysis](module1-initial-access/03-authentication-analysis.png)
+![Authentication Analysis](M1-INITIAL-ACCESS/03-authentication-analysis.png)
 
 Testing the field directly with `curl` confirmed a raw MySQL syntax error was being returned to the client, confirming SQL Injection:
 
@@ -80,12 +80,12 @@ to use near '''' at line 1
 
 Injecting a classic authentication-bypass payload into both `username` and `password` (`' `) returned the Patient Portal's authenticated content.
 
-![SQL Injection Testing](module1-initial-access/04-input-handling-sql-error.png)
-![Proof of Access - Login Page](module1-initial-access/05-proof-of-access-login.png)
+![SQL Injection Testing](M1-INITIAL-ACCESS/04-input-handling-sql-error.png)
+![Proof of Access - Login Page](M1-INITIAL-ACCESS/05-proof-of-access-login.png)
 
 This granted unauthenticated access to the "My lab reports" area, exposing 3 confidential patient pathology reports (S. Dlamini, P. Reddy, E. Thompson).
 
-![Lab Reports Access](module1-initial-access/06-lab-reports-access.png)
+![Lab Reports Access](M1-INITIAL-ACCESS/06-lab-reports-access.png)
 
 ---
 
@@ -101,11 +101,11 @@ All 3 PDF reports retrieved via Finding 1 were password-protected (Standard V2.3
 | `patient_report_2.pdf` | `password` |
 | `patient_report_3.pdf` | `!@#$%^&` |
 
-![Password Cracking Evidence](module2-cracking-encryption/m2-report1-cracking.png)
+![Password Cracking Evidence](M2-DATA-EXTRACTION/m2-report1-cracking.png)
 
 The weak, dictionary-guessable passwords meant the encryption provided negligible real-world protection for the patient data inside.
 
-![Decrypted Content](module2-cracking-encryption/m2-report1-opened.png)
+![Decrypted Content](M2-DATA-EXTRACTION/m2-report1-opened.png)
 
 ---
 
@@ -120,18 +120,18 @@ Author   : j.malik
 Comments : DB backup moved to /old before site migration, do not delete
 ```
 
-![Metadata Comment Leak](module3-data-exposure/m3-metadata-comment.png)
+![Metadata Comment Leak](M3-ATTACK-CRACKING/m3-metadata-comment.png)
 
 Requesting the disclosed path returned a full, unauthenticated directory listing:
 
-![Directory Listing Exposed](module3-data-exposure/m3-old-directory-listing.png)
+![Directory Listing Exposed](M3-ATTACK-CRACKING/m3-old-directory-listing.png)
 
 The listed file, `mediroza_db_backup_2019.sql`, was downloaded without any authentication challenge. It contained a plaintext dump of the `mediroza_hr` database, including:
 
 - **`staff` table** — 30 records with full name, job title, department, email, phone number, national ID number, and monthly salary.
 - **`shareholders` table** — 10 records with shareholder name, ownership percentage, shares held, and share class.
 
-![SQL Backup Downloaded](module3-data-exposure/m3-sql-backup-downloaded.png)
+![SQL Backup Downloaded](M3-ATTACK-CRACKING/m3-sql-backup-downloaded.png)
 
 ---
 
